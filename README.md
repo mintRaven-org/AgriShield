@@ -1,10 +1,13 @@
-<h1 align=center>SIH 2024</h1> 
+<div align="center">
+<img src="https://github.com/user-attachments/assets/55010a7e-02e1-4019-8dde-5a0c488ad5b6">
+</div>
+<h1 align=center>SIH 2024, TOP TECH MAVERICK</h1> 
 <p align="center">
   <a href="https://github.com/mintRaven-org/SIH/issues"><img src="https://img.shields.io/github/issues/mintRaven-05/Geminux?colorA=363a4f&colorB=f5a97f&style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij4KPHBhdGggZD0iTTIxNiwzMlYxOTJhOCw4LDAsMCwxLTgsOEg3MmExNiwxNiwwLDAsMC0xNiwxNkgxOTJhOCw4LDAsMCwxLDAsMTZINDhhOCw4LDAsMCwxLTgtOFY1NkEzMiwzMiwwLDAsMSw3MiwyNEgyMDhBOCw4LDAsMCwxLDIxNiwzMloiIHN0eWxlPSJmaWxsOiAjQ0FEM0Y1OyIvPgo8L3N2Zz4="></a>
 </p>
 
-## Members
-- Debjeet Banerjee (Team Captain)
+## Contributors
+- Debjeet Banerjee
 - Imon Chakraborty
 - Hritesh Saha
 - Biswa Ganguly
