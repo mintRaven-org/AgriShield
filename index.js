@@ -204,7 +204,7 @@ app.put("/profile", async (req, res) => {
   }
 });
 
-app.post("crop-history",async(req,res)=>{
+app.post("/crop-history",async(req,res)=>{
     try{
         const {name,aadhar,history,date}=req.body;
         const user = await signUp.findOne({ aadhar });
@@ -225,7 +225,7 @@ app.post("crop-history",async(req,res)=>{
     }
 })
 
-app.post("livestock-history",async(req,res)=>{
+app.post("/livestock-history",async(req,res)=>{
     try{
         const {name,aadhar,history,date}=req.body;
         const user = await signUp.findOne({ aadhar });
