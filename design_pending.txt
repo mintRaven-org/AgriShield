@@ -1,8 +1,8 @@
-TOTAL THING MUST SUPPORT MULTIPLE LANGUAGES (MAKE A LANGUAGE SELECTOR AS WELL)
+TOTAL THING MUST SUPPORT MULTIPLE LANGUAGES (MAKE A LANGUAGE SELECTOR AS WELL) : DONE
 
-sign up/log in page
-  - farmer ID
-  - password
+sign up/log in page : DONE
+  - farmer ID : DONE
+  - password : DONE
 
 HOMEPAGE
   - info about common diseases in your area
@@ -20,9 +20,9 @@ PROFILE PAGE
   - past encounter with animal diseases
 
 PREDICTION PAGE
-  - take picture of the issue or upload picture section
-  - type with keyboard section (for symptoms and all)
-  - voice to text as an option as well
+  - take picture of the issue or upload picture section : DONE
+  - type with keyboard section (for symptoms and all) : DONE
+  - voice to text as an option as well : DONE
 
 TALK WITH DOCTORS
   - recomended doctors and price they charge, along with contact details
@@ -31,3 +31,6 @@ TALK WITH DOCTORS
 PREVENTION/PRECAUTIONS/EARLY REMIDIES PAGE
   - just normal info page about do's and dont's
   - extra info and all, lorem ipsum
+
+ABOUT PAGE : DONE
+
