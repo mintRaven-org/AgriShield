@@ -4,6 +4,8 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.models import load_model
 import numpy as np
+import PIL.Image as Image
+import io
 
 model = load_model("crop_disease.h5")
 data_cat = ["Wheat black rust", "Wheat powdery mildew"]
@@ -20,8 +22,10 @@ def index():
 
 
 @app.post("/predict")
-def get_name(image: str):
-    image_load = tf.keras.utils.load_img(image, target_size=(img_height, img_width))
+def get_name(image):
+    img = Image.open(io.BytesIO(image))
+
+    image_load = tf.keras.utils.load_img(img, target_size=(img_height, img_width))
     img_arr = tf.keras.utils.array_to_img(image_load)
     img_bat = tf.expand_dims(img_arr, 0)
 
