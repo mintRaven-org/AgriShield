@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { FaRegEyeSlash } from "react-icons/fa6";
+import { FaRegEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 const LoginSignup = () => {
-  const [email, setEmail] = useState('');
+  const [aadhar, setaadhar] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -12,12 +13,27 @@ const LoginSignup = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
+    try {
+      const response = await axios.post("http://localhost:3001/signup", {
+        aadhar: aadhar,
+        password: password,
+        confirmPassword: confirmPassword
+      });
+  
+      if (response.status === 201) {
+        console.log("Registration Successful");
+        window.alert("Registration Successful");
+        
+      } else {
+        console.log("Invalid Registration");
+        window.alert("Invalid Registration");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      window.alert("Error during registration. Please try again.");
+    }
   };
 
   return (
@@ -28,14 +44,14 @@ const LoginSignup = () => {
           <img src="path-to-your-logo.png" alt="Logo" className="h-12 w-12" />
         </div>
         <h2 className="text-2xl font-semibold text-center mb-6">Login / Signup</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form method='POST' className="space-y-4">
           <div>
             <input 
-              type="email" 
-              placeholder="Email address" 
+              type="text" 
+              placeholder="Aadhar No." 
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={aadhar}
+              onChange={(e) => setaadhar(e.target.value)}
               required 
             />
           </div>
@@ -77,6 +93,7 @@ const LoginSignup = () => {
           </div>
           <button
             type="submit"
+            onClick={handleSubmit}
             className="w-full bg-black text-white p-3 rounded-lg hover:bg-gray-500 transition duration-300"
           >
             Confirm
