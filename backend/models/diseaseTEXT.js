@@ -6,7 +6,7 @@ const DiseaseTextSchema=new mongoose.Schema({
         required:true
     },
     symptoms:{
-        type:[String],
+        type:String,
         required:true
     }
 })

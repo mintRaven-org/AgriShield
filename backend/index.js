@@ -104,13 +104,10 @@ app.post("/crop-disease-text", async (req, res) => {
   try {
     const { diseaseName, symptoms } = req.body;
 
-    // Split the symptoms string into an array based on full stops
-    const symptomsArray = symptoms.split('.').map(s => s.trim()).filter(s => s.length > 0);
-
 
     const disease = new DiseaseText({
       diseaseName,
-      symptomsArray,
+      symptoms,
     });
     await disease.save();
     return res
@@ -150,13 +147,9 @@ app.post("/livestock-disease-text", async (req, res) => {
   try {
     const { diseaseName, symptoms } = req.body;
 
-    // Split the symptoms string into an array based on full stops
-    const symptomsArray = symptoms.split('.').map(s => s.trim()).filter(s => s.length > 0);
-
-  
     const disease = new DiseaseText({
       diseaseName,
-      symptomsArray,
+      symptoms,
     });
     await disease.save();
     return res
