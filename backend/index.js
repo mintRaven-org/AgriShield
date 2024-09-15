@@ -289,6 +289,7 @@ app.post('/ask-ai-img', upload.single('image'), async (req, res) => {
           ...(imageFile && { image: imageFile.buffer.toString('base64') }) // Convert image buffer to base64
       };
 
+
       // Send request to your AI model
       const aiResponse = await axios.post('http://localhost:8000/predict', requestData, {
           headers: {
@@ -301,6 +302,7 @@ app.post('/ask-ai-img', upload.single('image'), async (req, res) => {
       console.error('Error communicating with AI:', error);
       res.status(500).json({ error: "Failed to get response from AI" });
   }
+
 });
 
 app.listen(port, () => {
