@@ -285,10 +285,11 @@ app.post('/ask-ai-img', upload.single('image'), async (req, res) => {
 
   try {
       // Prepare the data to send to AI model
+      const base64Image = `data:${imageFile.mimetype};base64,${imageFile.buffer.toString('base64')}`;
+      
       const requestData = {
-          ...(imageFile && { image: imageFile.buffer.toString('base64') }) // Convert image buffer to base64
+          image: base64Image
       };
-
 
       // Send request to your AI model
       const aiResponse = await axios.post('http://localhost:8000/predict', requestData, {
