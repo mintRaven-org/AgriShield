@@ -1,50 +1,36 @@
 import React, { useRef, useState } from 'react';
+import Webcam from 'react-webcam';
 
 const WebcamCapture = () => {
-  const [webcamActive, setWebcamActive] = useState(false);
-  const [image, setImage] = useState(null);
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
+  const webcamRef = useRef(null);
+  const [imageSrc, setImageSrc] = useState(null);
 
-  const startWebcam = () => {
-    setWebcamActive(true);
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then((stream) => {
-          videoRef.current.srcObject = stream;
-        })
-        .catch((error) => {
-          console.error("Error accessing webcam: ", error);
-        });
-    }
-  };
-
-  const captureImage = () => {
-    const context = canvasRef.current.getContext('2d');
-    context.drawImage(videoRef.current, 0, 0, 640, 480);
-    const imageData = canvasRef.current.toDataURL('image/png');
-    setImage(imageData);
-    stopWebcam();
-  };
-
-  const stopWebcam = () => {
-    videoRef.current.srcObject.getTracks().forEach(track => track.stop());
-    setWebcamActive(false);
+  const capture = () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setImageSrc(imageSrc);
   };
 
   return (
     <div>
       <h3>Capture from Webcam</h3>
-      {webcamActive ? (
-        <>
-          <video ref={videoRef} autoPlay width="640" height="480" />
-          <button onClick={captureImage}>Capture Image</button>
-          <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480"></canvas>
-        </>
-      ) : (
-        <button onClick={startWebcam}>Start Webcam</button>
+      {/* Webcam Feed */}
+      <Webcam
+        audio={false}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        width="100%"  // Makes the webcam feed responsive to screen size
+      />
+
+      {/* Capture Button */}
+      <button onClick={capture}>Capture Photo</button>
+
+      {/* Display Captured Image */}
+      {imageSrc && (
+        <div>
+          <h2>Captured Image:</h2>
+          <img src={imageSrc} alt="Captured" width="200" />
+        </div>
       )}
-      {image && <img src={image} alt="Captured" width="200" />}
     </div>
   );
 };
