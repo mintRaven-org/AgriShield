@@ -1,10 +1,9 @@
-import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 import tensorflow as tf
-from tensorflow import keras
 from tensorflow.keras.models import load_model
 import numpy as np
-import PIL.Image as Image
+from PIL import Image
 import io
 import base64
 
@@ -17,28 +16,33 @@ img_width = 180
 app = FastAPI()
 
 
+class ImageRequest(BaseModel):
+    image: str
+
+
 @app.get("/")
 def index():
     return {"health": "ok", "status": "working"}
 
 
 @app.post("/predict")
-def get_name(image):
-    b = base64.b64decode(image)
-    img = Image.open(io.BytesIO(b))
+def get_name(request: ImageRequest):
+    try:
+        b = base64.b64decode(
+            request.image.split(",")[1]
+        )  # Remove the data URL scheme prefix
+        img = Image.open(io.BytesIO(b))
 
-    image_load = tf.keras.utils.load_img(img, target_size=(img_height, img_width))
-    img_arr = tf.keras.utils.array_to_img(image_load)
-    img_bat = tf.expand_dims(img_arr, 0)
+        img = img.resize((img_width, img_height))  # Resize image to match model input
+        img_arr = np.array(img)
+        img_arr = np.expand_dims(img_arr, 0)  # Create batch dimension
 
-    predict = model.predict(img_bat)
-    score = tf.nn.softmax(predict)
+        predict = model.predict(img_arr)
+        score = tf.nn.softmax(predict)
 
-    return {
-        "disease": f"{data_cat[np.argmax(score)]}",
-        "confidence": np.max(score) * 100,
-    }
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000)
+        return {
+            "disease": f"{data_cat[np.argmax(score)]}",
+            "confidence": np.max(score) * 100,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
