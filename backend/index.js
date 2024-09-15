@@ -272,7 +272,7 @@ app.post('/ask-ai', async (req, res) => {
 app.post('/ask-ai-img', upload.single('image'), async (req, res) => {
   const imageFile = req.file;
 
-  if (!question && !imageFile) {
+  if (!imageFile) {
       return res.status(400).json({ error: "Question or image file is required" });
   }
 
