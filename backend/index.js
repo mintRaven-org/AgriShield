@@ -103,11 +103,19 @@ app.post("/crop-disease-img", upload.single("image"), async (req, res) => {
 app.post("/crop-disease-text", async (req, res) => {
   try {
     const { diseaseName, symptoms } = req.body;
+
+    // Split the symptoms string into an array based on full stops
+    const symptomsArray = symptoms.split('.').map(s => s.trim()).filter(s => s.length > 0);
+
+
     const disease = new DiseaseText({
       diseaseName,
-      symptoms,
+      symptomsArray,
     });
     await disease.save();
+    return res
+      .status(201)
+      .json({ message: "Disease with text uploaded successfully!" });
   } catch {
     return res
       .status(500)
@@ -141,11 +149,19 @@ app.post("/livestock-disease-img", upload.single("image"), async (req, res) => {
 app.post("/livestock-disease-text", async (req, res) => {
   try {
     const { diseaseName, symptoms } = req.body;
+
+    // Split the symptoms string into an array based on full stops
+    const symptomsArray = symptoms.split('.').map(s => s.trim()).filter(s => s.length > 0);
+
+  
     const disease = new DiseaseText({
       diseaseName,
-      symptoms,
+      symptomsArray,
     });
     await disease.save();
+    return res
+      .status(201)
+      .json({ message: "Disease with text uploaded successfully!" });
   } catch {
     return res
       .status(500)
