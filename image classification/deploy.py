@@ -6,6 +6,7 @@ import numpy as np
 from PIL import Image
 import io
 import base64
+from chatbot import *
 
 model = load_model("crop_disease.h5")
 data_cat = ["Wheat black rust", "Wheat powdery mildew"]
@@ -46,3 +47,9 @@ def get_name(request: ImageRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/chatbot")
+def get_text(query: str):
+    res = get_text_reponse(query)
+    return {"diagonosis": f"{res}"}
