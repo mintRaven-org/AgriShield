@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const signUpSchema = new mongoose.Schema({
     aadhar: {
-      type: Number,
+      type: String,
       required: true,
     },
     password: {

@@ -13,6 +13,9 @@ const DiseaseText = require("./models/diseaseTEXT");
 const profile=require("./models/profile");
 const crop_history=require("./models/cropHistory");
 const livestock_history=require("./models/livestockHistory");
+const aiText=require("./models/ai-assistText");
+const aiImg=require("./models/ai-assistImg");
+const axios=require("axios");
 const db_uri = process.env.DB_URI;
 const port = process.env.PORT;
 
@@ -244,7 +247,61 @@ app.post("/livestock-history",async(req,res)=>{
     catch{
         return res.status(500).json({message:"Error saving History of livestock"})
     }
-})
+});
+
+app.post('/ask-ai', async (req, res) => {
+  const { question } = req.body;
+
+  if (!question) {
+      return res.status(400).json({ error: "Question is required" });
+  }
+
+  const newQuery = new aiText({ question });
+  await newQuery.save();
+
+  try {
+      const aiResponse = await axios.post('http://localhost:8000/predict', { question });
+
+      res.status(200).json({ response: aiResponse.data });
+  } catch (error) {
+      console.error('Error communicating with AI:', error);
+      res.status(500).json({ error: "Failed to get response from AI" });
+  }
+});
+
+app.post('/ask-ai-img', upload.single('image'), async (req, res) => {
+  const imageFile = req.file;
+
+  if (!question && !imageFile) {
+      return res.status(400).json({ error: "Question or image file is required" });
+  }
+
+  // Save the question and image to MongoDB if provided
+  const newQuery = new aiImg({
+      image: imageFile ? imageFile.buffer : null,
+      imageType: imageFile ? imageFile.mimetype : null
+  });
+  await newQuery.save();
+
+  try {
+      // Prepare the data to send to AI model
+      const requestData = {
+          ...(imageFile && { image: imageFile.buffer.toString('base64') }) // Convert image buffer to base64
+      };
+
+      // Send request to your AI model
+      const aiResponse = await axios.post('http://localhost:8000/predict', requestData, {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
+
+      res.status(200).json({ response: aiResponse.data });
+  } catch (error) {
+      console.error('Error communicating with AI:', error);
+      res.status(500).json({ error: "Failed to get response from AI" });
+  }
+});
 
 app.listen(port, () => {
   console.log("Server Started");
