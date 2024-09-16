@@ -79,13 +79,13 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.post("/crop-disease-img", upload.single("image"), async (req, res) => {
   try {
-    const { diseaseName } = req.body;
+    //const { diseaseName } = req.body;
     const imageFile = req.file;
     if (!imageFile) {
       return res.status(400).send({ message: "Please upload an image" });
     }
     const disease = new DiseaseImg({
-      diseaseName,
+      //diseaseName,
       image: imageFile.buffer,
       imageType: imageFile.mimetype,
     });
