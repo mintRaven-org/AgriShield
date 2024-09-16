@@ -1,7 +1,0 @@
-following images are dataset for the wheat crop disease powdered mildew
-total number of images used: 65
-accuracy: 81.117%
-dataset source: https://www.kaggle.com/datasets/jawadali1045/20k-multi-class-crop-disease-images
-==================================================================================================
-follow up loss = 0.4727
-validation loss = 0.4313
