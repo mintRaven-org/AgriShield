@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import LoginSignup from './pages/Login/LoginSignup';
 import HomePage from './pages/Home/HomePage';
+import AiAssist from './pages/AI assist/AiAssist';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           }
         />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/ai-assist" element={<AiAssist />} />
       </Routes>
     </Router>
   );
