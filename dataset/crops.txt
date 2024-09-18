@@ -1,0 +1,7 @@
+## Multi Crop dataset (20k+)
+  - https://www.kaggle.com/datasets/jawadali1045/20k-multi-class-crop-disease-images
+  - testing data to be collected from drive
+======================================================================================
+
+##  Following dataset to be stored the database
+## @Hritesh-saha put it ur pending list for later
