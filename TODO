@@ -1,10 +1,10 @@
-@mintRaven-05 
+@mintRaven-05
 AgriShield (ML/DL branch)
 ==============================
   TODO
   -----
   - nothing to do
-  
+
   DONE
   -----
   - classify images (wheat black rust and wheat powdered mildew)
@@ -13,4 +13,4 @@ AgriShield (ML/DL branch)
   - deploy the classifier over a localhost port
   - extract features from mongoDB
   - add symptoms to gemini for text classification
-  - prepare gemini to deploy
+  - prepare gemini to deploy.
