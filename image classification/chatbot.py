@@ -16,7 +16,7 @@ if platform.architecture()[1] == "ELF":
 
 # ------------------------------------------------------------
 
-uri = "mongodb+srv://debjeetbanerjee48:iNJfRwHgaZ7pCaSX@cluster.33qs8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster"
+uri = ""
 
 client = MongoClient(uri, server_api=ServerApi("1"))
 try:
@@ -40,7 +40,7 @@ for i in res:
 
 # ------------------------------------------------------------
 def get_text_reponse(query):
-    genai.configure(api_key="AIzaSyBdEUYlhpSDEq2XOOG327NqKf1YKCWwHAc")
+    genai.configure(api_key="")
 
     model = genai.GenerativeModel("gemini-1.5-flash")
     chat = model.start_chat(
