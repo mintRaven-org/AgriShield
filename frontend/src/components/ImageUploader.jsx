@@ -5,7 +5,7 @@ import axios from 'axios';
 const ImageUploader = ({ onImageUpload }) => {
   const [image, setImage] = useState(null);
   const [file, setFile] = useState(null);
-  const [uploadMessage, setUploadMessage] = useState(''); // To handle any message from onImageUpload
+  const [uploadMessage, setUploadMessage] = useState('');
 
   const handleImageUpload = (e) => {
     const selectedFile = e.target.files[0];
@@ -14,6 +14,7 @@ const ImageUploader = ({ onImageUpload }) => {
       reader.onloadend = () => {
         setImage(reader.result); // Show image preview
         setFile(selectedFile); // Save the file for sending
+        onImageUpload(reader.result); // Pass the image to AiAssist
       };
       reader.readAsDataURL(selectedFile);
     }
@@ -48,32 +49,29 @@ const ImageUploader = ({ onImageUpload }) => {
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleSubmit(); // Trigger the image upload on Enter key press
-    }
-  };
-
   return (
-    <div className="flex flex-col items-center space-y-4">
-      <h3>Upload Image</h3>
-      <input type="file" accept="image/*" name="image" onChange={handleImageUpload} />
-      {image && <img src={image} alt="Uploaded Preview" width="200" />}
-      <div className="flex items-center space-x-2">
-        {/* Press the button to send */}
-        {image && (
-          <button onClick={handleSubmit} className="p-2 bg-blue-500 rounded-full text-white">
-            <FiSend size={24} />
-          </button>
-        )}
-      </div>
-      {/* Display upload message if exists */}
-      {uploadMessage && <p>{uploadMessage}</p>}
+    <div className="flex flex-col items-center justify-between space-y-4">
+  <h3>Upload Image</h3>
+  <input type="file" accept="image/*" name="image" onChange={handleImageUpload} />
+  
+  {image && (
+    <div className="bg-green-600 flex justify-center items-center w-64 h-60">
+      <img src={image} alt="Uploaded Preview" className="max-w-full max-h-full" />
     </div>
+  )}
+  
+  <div className="flex items-center space-x-2">
+    {image && (
+      <button onClick={handleSubmit} className="p-2 bg-blue-500 rounded-full text-white">
+        <FiSend size={24} />
+      </button>
+    )}
+  </div>
+
+  {uploadMessage && <p>{uploadMessage}</p>}
+</div>
+
   );
 };
 
 export default ImageUploader;
-
-
-
