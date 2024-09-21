@@ -24,36 +24,10 @@ function AiAssist() {
     setShowWebcam(false);
   };
 
-  // Handle image upload
-  const handleImageUpload = async () => {
-    if (file) {
-      const formData = new FormData();
-      formData.append('image', file); // Attach the image file to FormData
-  
-      try {
-        const response = await axios.post('http://localhost:3001/ask-ai-img', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-  
-        if (response.data && response.data.response) {
-          const { disease } = response.data.response;
-          setMessages([...messages, { text: `Disease: ${disease}`, sender: 'ai' }]);
-        } else {
-          setMessages([...messages, { text: 'Image uploaded successfully', sender: 'ai' }]);
-        }
-      } catch (error) {
-        console.error('Error uploading image:', error);
-        setMessages([...messages, { text: 'Error uploading image', sender: 'ai' }]);
-      }
-  
-      // Clear the preview and file after upload
-      setImage(null);
-      setFile(null);
-    }
+  // Handle image upload (from ImageUploader component)
+  const handleImageUpload = (imageSrc) => {
+    setMessages([...messages, { image: imageSrc, sender: 'user' }]);
   };
-  
 
   // Start a new conversation by clearing previous messages
   const startNewConversation = () => {
@@ -153,14 +127,14 @@ function AiAssist() {
             key={index}
             className={`${
               msg.sender === 'user'
-                ? 'self-end bg-green-500'
+                ? 'self-end bg-green-500'  // Green background for user messages
                 : 'self-start bg-gray-700'
             } text-white px-4 py-2 rounded-lg max-w-xs`}
           >
             {msg.text ? (
               <p className='font-bold'>{msg.text}</p>
             ) : (
-              <img src={msg.image} alt="Uploaded" className="rounded-lg max-w-xs" />
+              <img src={msg.image} alt="Uploaded" className="rounded-lg bg-green-500 max-w-xs" />
             )}
           </div>
         ))}
