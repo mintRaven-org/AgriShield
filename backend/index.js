@@ -15,6 +15,7 @@ const crop_history=require("./models/cropHistory");
 const livestock_history=require("./models/livestockHistory");
 const aiText=require("./models/ai-assistText");
 const aiImg=require("./models/ai-assistImg");
+const doctorInfo=require("./models/doctorInfo");
 const axios=require("axios");
 const db_uri = process.env.DB_URI;
 const port = process.env.PORT;
@@ -328,6 +329,56 @@ app.post('/ask-ai-img', upload.single('image'), async (req, res) => {
       res.status(500).json({ error: "Failed to get response from AI" });
   }
 
+});
+
+app.get("/search",async(req,res)=>{
+  try{
+    const { query }=req.query;
+    if(!query){
+      return res.status(400).json({error:"Query parameter Required."});
+    }
+    const result=await doctorInfo.find({name: new RegExp('^' + query,'i')});
+
+    res.json(result);
+  }
+  catch{
+    res.status(500).json({error:"Failed to search for doctor"})
+  }
+});
+
+const generateRandomId = () => {
+  return Math.floor(1000000 + Math.random() * 9000000);  // Generates a 7-digit random number
+};
+
+const isidUnique = async (id) => {
+  const doctor = await doctorInfo.findOne({ id });
+  return !doctor;  // Returns true if no doctor with the ID exists
+};
+
+app.post("/add-doctor",async(req,res)=>{
+  try{
+    const {name,contact,qualification,info}=req.body;
+
+    let id;
+    let isUnique = false;
+
+    while (!isUnique) {
+      id = generateRandomId();
+      isUnique = await isidUnique(id);
+    }
+    const doctor=new doctorInfo({
+      name,
+      id,
+      contact,
+      qualification,
+      info
+    });
+    await doctor.save();
+    return res.status(201).json({message:"Doctor Added Successfully"});
+  }
+  catch{
+    res.status(500).json({error:"Failed to add doctor"});
+  }
 });
 
 app.listen(port, () => {
