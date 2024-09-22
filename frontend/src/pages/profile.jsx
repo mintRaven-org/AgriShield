@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BottomNav from "../components/BottomNav";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -86,184 +87,177 @@ const Profile = () => {
   const { name, age, aadhar, address, crops, livestock, profilePicture } = profile;
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden my-10">
-      {/* Profile Header */}
-      <div className="flex justify-center items-center bg-gray-100 p-6 relative">
-        {/* Profile Image */}
-        <img
-          src={profilePicture}
-          alt="Profile"
-          className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
-        />
-        {isEditing && (
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleProfilePictureChange}
-            className="absolute bottom-2 left-2"
+    <section className="flex flex-col min-h-screen">
+      <div className="flex-grow max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden my-10">
+        {/* Profile Header */}
+        <div className="flex justify-center items-center bg-gray-100 p-6 relative">
+          {/* Profile Image */}
+          <img
+            src={profilePicture}
+            alt="Profile"
+            className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
           />
-        )}
-        <div className="absolute top-2 right-2 cursor-pointer" onClick={handleEditToggle}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.232 5.232a3 3 0 014.243 4.243l-10 10a4.5 4.5 0 01-1.802 1.131l-3.671 1.028 1.028-3.67a4.5 4.5 0 011.13-1.803l10-10z"
+          {isEditing && (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleProfilePictureChange}
+              className="absolute bottom-2 left-2"
             />
-          </svg>
+          )}
+          <div className="absolute top-2 right-2 cursor-pointer" onClick={handleEditToggle}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.232 5.232a3 3 0 014.243 4.243l-10 10a4.5 4.5 0 01-1.802 1.131l-3.671 1.028 1.028-3.67a4.5 4.5 0 011.13-1.803l10-10z"
+              />
+            </svg>
+          </div>
         </div>
-      </div>
 
-      {/* Profile Name and Age */}
-      <div className="flex flex-col items-center mt-4">
-        {isEditing ? (
-          <>
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={handleChange}
-              className="text-center border rounded mb-2"
-            />
-            <input
-              type="number"
-              name="age"
-              value={age}
-              onChange={handleChange}
-              className="text-center border rounded"
-            />
-          </>
-        ) : (
-          <>
-            <h1 className="text-2xl font-bold">{name}</h1>
-            {age && <p className="text-gray-500">Age: {age}</p>}
-          </>
-        )}
-      </div>
-
-      {/* Profile Content */}
-      <div className="p-6">
-        {/* Address */}
-        <div className="text-center mb-4">
+        {/* Profile Name and Age */}
+        <div className="flex flex-col items-center mt-4">
           {isEditing ? (
             <>
               <input
                 type="text"
-                name="address.street"
-                value={address.street}
+                name="name"
+                value={name}
                 onChange={handleChange}
-                className="border rounded mb-1 w-full"
+                className="text-center border rounded mb-2"
               />
               <input
-                type="text"
-                name="address.city"
-                value={address.city}
+                type="number"
+                name="age"
+                value={age}
                 onChange={handleChange}
-                className="border rounded mb-1 w-full"
-              />
-              <input
-                type="text"
-                name="address.postalCode"
-                value={address.postalCode}
-                onChange={handleChange}
-                className="border rounded w-full"
+                className="text-center border rounded"
               />
             </>
           ) : (
-            <p>
-              {address.street}, {address.city} - {address.postalCode}
-            </p>
+            <>
+              <h1 className="text-2xl font-bold">{name}</h1>
+              {age && <p className="text-gray-500">Age: {age}</p>}
+            </>
           )}
         </div>
 
-        {/* Aadhaar */}
-        <div className="text-center mb-4">
-          {isEditing ? (
-            <input
-              type="text"
-              name="aadhar"
-              value={aadhar}
-              onChange={handleChange}
-              className="border rounded w-full"
-            />
-          ) : (
+        {/* Profile Content */}
+        <div className="p-6">
+          {/* Address */}
+          <div className="text-center mb-4">
+            {isEditing ? (
+              <>
+                <input
+                  type="text"
+                  name="address.street"
+                  value={address.street}
+                  onChange={handleChange}
+                  className="border rounded mb-1 w-full"
+                />
+                <input
+                  type="text"
+                  name="address.city"
+                  value={address.city}
+                  onChange={handleChange}
+                  className="border rounded mb-1 w-full"
+                />
+                <input
+                  type="text"
+                  name="address.postalCode"
+                  value={address.postalCode}
+                  onChange={handleChange}
+                  className="border rounded w-full"
+                />
+              </>
+            ) : (
+              <p>
+                {address.street}, {address.city} - {address.postalCode}
+              </p>
+            )}
+          </div>
+
+          {/* Aadhaar */}
+          <div className="text-center mb-4">
             <p>Farmer ID: {aadhar}</p>
-          )}
-        </div>
+          </div>
 
-        {/* Crops */}
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold">Crops:</h2>
-          <ul className="list-disc list-inside">
-            {crops.map((crop, index) => (
-              <li key={index}>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={crop}
-                    onChange={(e) => handleCropChange(e, index)}
-                    className="border rounded mb-1 w-full"
-                  />
-                ) : (
-                  crop
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Livestock */}
-        <div>
-          <h2 className="text-xl font-semibold">Livestock:</h2>
-          <ul className="list-disc list-inside">
-            {livestock.map((animal, index) => (
-              <li key={index} className="flex justify-between">
-                {isEditing ? (
-                  <>
+          {/* Crops */}
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold">Crops:</h2>
+            <ul className="list-disc list-inside">
+              {crops.map((crop, index) => (
+                <li key={index}>
+                  {isEditing ? (
                     <input
                       type="text"
-                      value={animal.name}
-                      onChange={(e) => handleLivestockChange(e, index, "name")}
-                      className="border rounded mb-1"
+                      value={crop}
+                      onChange={(e) => handleCropChange(e, index)}
+                      className="border rounded mb-1 w-full"
                     />
-                    <input
-                      type="number"
-                      value={animal.quantity}
-                      onChange={(e) => handleLivestockChange(e, index, "quantity")}
-                      className="border rounded mb-1 w-16 text-center"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <span>{animal.name}</span>
-                    <span>{animal.quantity}</span>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Edit Button */}
-        {isEditing && (
-          <div className="mt-6 text-center">
-            <button
-              className="bg-green-500 text-white px-4 py-2 rounded"
-              onClick={handleSaveChanges}
-            >
-              Save Changes
-            </button>
+                  ) : (
+                    crop
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
-        )}
+
+          {/* Livestock */}
+          <div>
+            <h2 className="text-xl font-semibold">Livestock:</h2>
+            <ul className="list-disc list-inside">
+              {livestock.map((animal, index) => (
+                <li key={index} className="flex justify-between">
+                  {isEditing ? (
+                    <>
+                      <input
+                        type="text"
+                        value={animal.name}
+                        onChange={(e) => handleLivestockChange(e, index, "name")}
+                        className="border rounded mb-1"
+                      />
+                      <input
+                        type="number"
+                        value={animal.quantity}
+                        onChange={(e) => handleLivestockChange(e, index, "quantity")}
+                        className="border rounded mb-1 w-16 text-center"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <span>{animal.name}</span>
+                      <span>{animal.quantity}</span>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Edit Button */}
+          {isEditing && (
+            <div className="mt-6 text-center">
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded"
+                onClick={handleSaveChanges}
+              >
+                Save Changes
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      <BottomNav />
+    </section>
   );
 };
 

@@ -5,6 +5,7 @@ import ImageUploader from '../../components/ImageUploader';
 import { FiMic, FiSend, FiEdit2, FiCamera, FiLayers, FiArrowLeft } from 'react-icons/fi';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import BottomNav from '../../components/BottomNav';
 
 function AiAssist() {
   const [showWebcam, setShowWebcam] = useState(false);
@@ -169,6 +170,7 @@ function AiAssist() {
           <FiSend size={24} />
         </button>
       </div>
+      <BottomNav/>
     </div>
   );
 }
