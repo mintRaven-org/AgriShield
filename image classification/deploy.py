@@ -7,6 +7,20 @@ from PIL import Image
 import io
 import base64
 from chatbot import *
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import pymongo
+
+uri = "mongodb+srv://debjeetbanerjee48:iNJfRwHgaZ7pCaSX@cluster.33qs8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster"
+
+client = MongoClient(uri, server_api=ServerApi("1"))
+try:
+    client.admin.command("ping")
+    print("You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
+db = client["AgriShield"]
 
 model = load_model("crop_disease.h5")
 data_cat = ["Wheat black rust", "Wheat powdery mildew"]
@@ -57,6 +71,22 @@ async def get_text(request: Request):
         res = get_text_reponse(
             query_str
         )  # Pass the raw string to the response function
+        question_history = db["textquestions"]
+        chats = question_history.find({})
+        length = 0
+        count = 0
+        for i in chats:
+            length += 1
+        if length >= 5:
+            record_to_delete = question_history.find().sort("_id", 1).limit(1)
+            question_history.insert_one({"question": query_str, "response": res})
+            for i in record_to_delete:
+                for j in i:
+                    if j == "_id":
+                        question_history.delete_one({"_id": i[j]})
+        else:
+            question_history.insert_one({"query": query_str, "response": res})
+
         return {"diagnosis": f"{res}"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
