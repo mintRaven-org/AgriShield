@@ -291,9 +291,15 @@ app.post('/ask-ai-img', upload.single('image'), async (req, res) => {
   console.log(imageFile);
 
   if (!imageFile) {
-      return res.status(400).json({ error: " Image file is required" });
+      return res.status(400).json({ error: "query or image file is required" });
   }
 
+  // Save the query and image to MongoDB if provided
+  //const newQuery = new aiImg({
+  //    image: imageFile ? imageFile.buffer : null,
+  //    imageType: imageFile ? imageFile.mimetype : null
+  //});
+  //await newQuery.save();
 
   try {
       // Prepare the data to send to AI model
