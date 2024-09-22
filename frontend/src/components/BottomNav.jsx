@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function BottomNav() {
   return (
-    <div className="flex justify-evenly bg-white py-4 border-2 rounded-t-lg mt-4">
+    <div className="fixed bottom-0 left-0 w-full flex justify-evenly bg-white py-4 border-t-2 border-gray-300 rounded-t-lg">
       {/* Notifications Button */}
       <Link
         to="/notifications"
