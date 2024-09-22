@@ -267,9 +267,6 @@ app.post('/ask-ai', async (req, res) => {
       return res.status(400).json({ error: "query is required" });
   }
 
-  const newQuery = new aiText({ query });
-  await newQuery.save();
-
   try {
     // Send the query as a JSON body in the POST request
     const aiResponse = await axios.post('http://localhost:8000/chatbot',query, {
@@ -294,15 +291,9 @@ app.post('/ask-ai-img', upload.single('image'), async (req, res) => {
   console.log(imageFile);
 
   if (!imageFile) {
-      return res.status(400).json({ error: "query or image file is required" });
+      return res.status(400).json({ error: " Image file is required" });
   }
 
-  // Save the query and image to MongoDB if provided
-  const newQuery = new aiImg({
-      image: imageFile ? imageFile.buffer : null,
-      imageType: imageFile ? imageFile.mimetype : null
-  });
-  await newQuery.save();
 
   try {
       // Prepare the data to send to AI model
@@ -380,6 +371,33 @@ app.post("/add-doctor",async(req,res)=>{
     res.status(500).json({error:"Failed to add doctor"});
   }
 });
+
+app.put("/update-doctor",async(req,res)=>{
+  try{
+    const {name,contact,qualification,info,id}=req.body;
+
+    const updates={};
+    if(name!= null)updates.name=name;
+    if(contact!= null) updates.contact=contact;
+    if(qualification!= null) updates.qualification=qualification;
+    if(info!= null) updates.info=info;
+
+    const updatedInfo= await doctorInfo.findOneAndUpdate(
+      {id},
+      {$set:updates},
+      {new:true, runValidators: true }
+    );
+    if (!updatedInfo){
+      return res.status(200).json({message:"Doctor not Found"});
+    };
+    return res
+      .status(200)
+      .json({ message: "Doctor Information updated successfully!", updatedInfo });
+  }
+  catch{
+    res.status(500).json({error:"Failed to update doctor"});
+  }
+})
 
 app.listen(port, () => {
   console.log("Server Started");
