@@ -4,7 +4,7 @@ import HomePage from './pages/Home/HomePage';
 import AiAssist from './pages/AI assist/AiAssist';
 import Login from './pages/Login/Login';
 import Signup from './pages/Login/Signup';
-import Profile from './pages/profile';
+import Profile from './pages/Profile/Profile';
 
 
 function App() {

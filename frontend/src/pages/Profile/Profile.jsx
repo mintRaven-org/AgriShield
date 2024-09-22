@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../../components/BottomNav";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -87,7 +87,7 @@ const Profile = () => {
   const { name, age, aadhar, address, crops, livestock, profilePicture } = profile;
 
   return (
-    <section className="flex flex-col min-h-screen">
+    <section className="flex flex-col min-h-4xl">
       <div className="flex-grow max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden my-10">
         {/* Profile Header */}
         <div className="flex justify-center items-center bg-gray-100 p-6 relative">
