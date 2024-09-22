@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaBell, FaUser, FaCog, FaLayerGroup, FaHome, FaRobot } from 'react-icons/fa';
+import BottomNav from '../../components/BottomNav';
 
 const doctors = [
   {
@@ -31,9 +32,9 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen flex flex-col justify-between bg-gray-100 p-4">
+    <section className="h-screen flex flex-col justify-between bg-gray-100">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center p-4">
         {/* Left Icon (e.g., User Profile) */}
         <div
           className="p-3 bg-blue-500 rounded-full cursor-pointer"
@@ -47,11 +48,11 @@ const HomePage = () => {
           <FaLayerGroup className="text-gray-700 text-2xl" />
         </div>
       </div>
-      <div className="flex justify-center items-center">
+      
+      {/* Doctors List Section */}
+      <div className="flex-grow flex justify-center items-center">
         <div className="w-full max-w-4xl">
-          <h1 className="text-2xl font-bold text-center mb-6">
-            List of Doctors
-          </h1>
+          <h1 className="text-2xl font-bold text-center mb-6">List of Doctors</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {doctors.map((doctor) => (
               <div
@@ -65,52 +66,10 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      {/* Bottom Navigation Bar */}
-      <div className="flex justify-around bg-white py-4 shadow-md rounded-t-lg">
-        {/* Notifications Button */}
-        <div
-          className="flex flex-col items-center cursor-pointer"
-          onClick={() => navigate("/notifications")}
-        >
-          <FaBell className="text-2xl" />
-          <span className="text-xs mt-1">80</span>
-        </div>
 
-        {/* Home Button */}
-        <div
-          className="flex flex-col items-center cursor-pointer"
-          onClick={() => navigate("/")}
-        >
-          <FaHome className="text-2xl" />
-        </div>
-        {/* AI Assist Button */}
-        <div
-          className="flex flex-col items-center cursor-pointer"
-          onClick={() => navigate("/ai-assist")}
-        >
-          <FaRobot className="text-2xl" />
-          <span className="text-xs mt-1">AI Assist</span>
-        </div>
-
-        {/* Profile Button */}
-        <div
-          className="flex flex-col items-center cursor-pointer"
-          onClick={() => navigate("/profile")}
-        >
-          <FaUser className="text-2xl" />
-        </div>
-
-        {/* Settings Button */}
-        <div
-          className="flex flex-col items-center cursor-pointer"
-          onClick={() => navigate("/settings")}
-        >
-          <FaCog className="text-2xl" />
-        </div>
-      </div>
-    </div>
+      <BottomNav />
+    </section>
   );
 };
 
 export default HomePage;
-

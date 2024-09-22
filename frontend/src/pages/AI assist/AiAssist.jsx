@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import VoiceToText from '../../components/VoiceToText'; // Reuse this for the voice recognition logic
+import VoiceToText from '../../components/VoiceToText';
 import WebcamCapture from '../../components/WebcamCapture';
 import ImageUploader from '../../components/ImageUploader';
 import { FiMic, FiSend, FiEdit2, FiCamera, FiLayers, FiArrowLeft } from 'react-icons/fi';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import BottomNav from '../../components/BottomNav';
 
 function AiAssist() {
   const [showWebcam, setShowWebcam] = useState(false);
@@ -27,6 +28,11 @@ function AiAssist() {
   // Handle image upload (from ImageUploader component)
   const handleImageUpload = (imageSrc) => {
     setMessages([...messages, { image: imageSrc, sender: 'user' }]);
+  };
+
+  // Handle AI response from image upload
+  const handleImageResponse = (response) => {
+    setMessages([...messages, { text: response, sender: 'ai' }]);
   };
 
   // Start a new conversation by clearing previous messages
@@ -64,7 +70,6 @@ function AiAssist() {
       setMessages([...messages, { text, sender: 'user' }]);
       
       try {
-        // Make a POST request to your backend with the user input
         const response = await axios.post('http://localhost:3001/ask-ai', { query: text });
         setMessages((prevMessages) => [
           ...prevMessages,
@@ -128,7 +133,7 @@ function AiAssist() {
             className={`${
               msg.sender === 'user'
                 ? 'self-end bg-green-500'  // Green background for user messages
-                : 'self-start bg-gray-700'
+                : 'self-start bg-black'    // Black background for AI responses
             } text-white px-4 py-2 rounded-lg max-w-xs`}
           >
             {msg.text ? (
@@ -141,7 +146,12 @@ function AiAssist() {
 
         {/* Webcam and ImageUploader Components */}
         {showWebcam && <WebcamCapture />}
-        {showImageUploader && <ImageUploader onImageUpload={handleImageUpload} />}
+        {showImageUploader && (
+          <ImageUploader
+            onImageUpload={handleImageUpload}
+            onImageResponse={handleImageResponse}
+          />
+        )}
       </div>
 
       {/* Bottom Input Section */}
@@ -160,6 +170,7 @@ function AiAssist() {
           <FiSend size={24} />
         </button>
       </div>
+      <BottomNav/>
     </div>
   );
 }
