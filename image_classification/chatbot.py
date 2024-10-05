@@ -3,7 +3,7 @@ from google.generativeai.types.generation_types import collections
 import pymongo
 import os
 import platform
-
+import dotenv
 from collections.abc import Collection
 from bson.objectid import ObjectId
 from pymongo.mongo_client import MongoClient
@@ -15,8 +15,10 @@ if platform.architecture()[1] == "ELF":
     os.environ["GLOG_minloglevel"] = "2"
 
 # ------------------------------------------------------------
+dotenv.load_dotenv()
 
-uri = ""
+uri = os.environ.get("MONGODB_URI")
+api = os.environ.get("API_KEY")
 
 client = MongoClient(uri, server_api=ServerApi("1"))
 try:
@@ -40,7 +42,7 @@ for i in res:
 
 # ------------------------------------------------------------
 def get_text_reponse(query):
-    genai.configure(api_key="")
+    genai.configure(api_key=api)
 
     model = genai.GenerativeModel("gemini-1.5-flash")
     chat = model.start_chat(
