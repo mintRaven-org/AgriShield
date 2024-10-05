@@ -1,3 +1,5 @@
+import os
+import dotenv
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 import tensorflow as tf
@@ -11,7 +13,8 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import pymongo
 
-uri = ""
+dotenv.load_dotenv()
+uri = os.environ.get("MONGODB_URI")
 
 client = MongoClient(uri, server_api=ServerApi("1"))
 try:
